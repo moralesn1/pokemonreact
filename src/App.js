@@ -1,7 +1,18 @@
-import "./App.css";
+import React, { useState, useEffect } from "react";
+import PokemonList from "./PokemonList";
+import axios from "axios";
 
 function App() {
-  return null;
+  const [pokemon, setPokemon] = useState([]);
+
+  useEffect(() => {
+    axios.get("https://pokeapi.co/api/v2/pokemon").then(res => {
+      setPokemon(res.data.results.map(p => p.name));
+    });
+  }, []);
+  // Effect only renders once.
+
+  return <PokemonList pokemon={pokemon} />;
 }
 
 export default App;
